@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newfolder/models/regionmodel.dart';
 import 'package:newfolder/utils/api.dart';
 
 import '../models/summary.dart';
@@ -12,7 +13,7 @@ class Regions extends StatefulWidget {
 }
 
 class _RegionsState extends State<Regions> {
-  List<SummaryModel>? summaryModel = [];
+  List<RegionModel>? regionsList = [];
 
   @override
   void initState() {
@@ -22,7 +23,7 @@ class _RegionsState extends State<Regions> {
   }
 
   void getRegions() async {
-    await ApiService().getRegionInfo();
+    regionsList = await ApiService().getRegionInfo();
   }
 
   @override

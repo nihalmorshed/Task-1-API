@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../models/regionModel.dart';
 import '../models/summary.dart';
 import '../models/timedata.dart';
 import 'constants.dart';
@@ -35,7 +36,7 @@ class ApiService {
     }
   }
 
-  Future<List<SummaryModel>?> getRegionInfo() async {
+  Future<List<RegionModel>?> getRegionInfo() async {
     try {
       var url = Uri.parse(HotelApi.HotelRegionUrl);
       url = url.replace(
@@ -53,7 +54,7 @@ class ApiService {
         final parsed = json.decode(response.body);
         print(response.body);
         return parsed
-            .map<SummaryModel>((json) => SummaryModel.fromJson(json))
+            .map<RegionModel>((json) => RegionModel.fromJson(json))
             .toList();
       } else {
         throw Exception(response.statusCode.toString());
