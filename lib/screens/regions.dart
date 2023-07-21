@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:newfolder/models/regionmodel.dart';
 import 'package:newfolder/utils/api.dart';
 
-import '../models/summary.dart';
-
 class Regions extends StatefulWidget {
   Regions({Key? key}) : super(key: key);
   static const routeName = '/regions';
@@ -23,7 +21,8 @@ class _RegionsState extends State<Regions> {
   }
 
   void getRegions() async {
-    regionsList = await ApiService().getRegionInfo();
+    regionsList = (await ApiService().getRegionInfo())?.cast<RegionModel>();
+    setState(() {});
   }
 
   @override
@@ -31,6 +30,18 @@ class _RegionsState extends State<Regions> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Regions'),
+      ),
+      body: ListView.builder(
+        itemCount: regionsList?.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(
+                regionsList?[index].data![0].regionNames!.fullName ?? 'Nodata'),
+            subtitle: Text(
+                regionsList?[index].data![0].regionNames?.displayName ??
+                    'Nodata'),
+          );
+        },
       ),
     );
   }
